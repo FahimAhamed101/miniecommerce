@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import uploadImage from "./utils/UploadImage.js";
 dotenv.config()
 
 const app = express()
@@ -12,7 +13,11 @@ app.use(cors({
   })
 )
 app.use(express.json({ limit: "25mb" }));
-
+app.post("/uploadImage", (req, res) => {
+    uploadImage(req.body.image)
+      .then((url) => res.send(url))
+      .catch((err) => res.status(500).send(err));
+  });
 
 async function main() {
     await mongoose.connect(process.env.DB_URL);
