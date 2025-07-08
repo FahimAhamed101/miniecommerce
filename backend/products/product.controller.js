@@ -44,7 +44,7 @@ export const getAllProducts = async (req, res) => {
       const products = await Products.find(filter)
         .skip(skip)
         .limit(parseInt(limit))
-        .populate('author', 'email username')
+        
         .sort({ createdAt: -1 });
   
       return successResponse(res, 200, "Products fetched successfully", {
@@ -61,8 +61,7 @@ export const getAllProducts = async (req, res) => {
 export const getSingleProduct=async(req,res)=>{
     const {id} = req.params;
    try {
-    const product  = await Products.findById(id).populate('author', 'username email');
-    
+    const product  = await Products.findById(id)
     if(!product) {
         return errorResponse(res, 404, "Product not found")
     }
