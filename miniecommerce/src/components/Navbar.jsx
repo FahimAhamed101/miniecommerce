@@ -69,26 +69,11 @@ const Navbar = () => {
                 Shop
               </NavLink>
             </li>
-            <li className="link">
-              <NavLink
-                className={({ isActive }) => (isActive ? "active" : "")}
-                to="/pages"
-              >
-                Pages
-              </NavLink>
-            </li>
-            <li className="link">
-              <NavLink
-                className={({ isActive }) => (isActive ? "active" : "")}
-                to="/contact"
-              >
-                Contact
-              </NavLink>
-            </li>
+            
           </ul>
           <div className="nav__logo">
             <Link to="/">
-              Lebaba<span>.</span>
+              MiniShop<span>.</span>
             </Link>
           </div>
           <div className="nav__icons relative">

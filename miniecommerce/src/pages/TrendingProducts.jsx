@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import ProductCards from "./ProductCards";
-import Loading from '../components/Loading'
-import { useFetchAllProdutsQuery } from '../redux/features/products/productsApi'
+import Loading from '../components/Loading';
+import { useFetchAllProdutsQuery } from '../redux/features/products/productsApi';
+import CartModal from "./CartModal";
+import { useSelector } from "react-redux";
 
 const TrendingProducts = () => {
   const [visibleProducts, setVisibleProducts] = useState(8);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  
   const loadMoreProducts = () => {
-    setVisibleProducts((prvCount) => prvCount + 4);
+    setVisibleProducts((prevCount) => prevCount + 4);
   };
-  const [currentPage, setCurrentPage] = useState(1)
-  const {data:productsData={},error,isLoading} = useFetchAllProdutsQuery({
-    
-    
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data: productsData = {}, isLoading } = useFetchAllProdutsQuery({
     page: currentPage,
-    
+  });
 
-  })
-  console.log(productsData?.data)
+  const { products: cartProducts } = useSelector(state => state.cart);
 
-  //loading
-  if(isLoading) return <Loading/>
+  if (isLoading) return <Loading />;
 
-  const {products,totalPages,totalProducts} =  productsData?.data || {}
+  const { products = [] } = productsData?.data || {};
 
   return (
     <section className="section__container product__container">
@@ -30,18 +31,27 @@ const TrendingProducts = () => {
         Discover the Hottest Picks: Elevate Your Style with Our Curated
         Collection of Trending Women's Fashion Products.
       </p>
-      {/* products cards */}
+      
       <div className="mt-8">
-        <ProductCards products={products.slice(0, visibleProducts)} />
+        <ProductCards 
+          products={products.slice(0, visibleProducts)} 
+          onCartOpen={() => setIsCartOpen(true)}
+        />
       </div>
-      {/* load more button */}
-      <div className="product__btn">
-        {visibleProducts < products.length && (
+      
+      {visibleProducts < products.length && (
+        <div className="product__btn">
           <button onClick={loadMoreProducts} className="btn">
             Load More
           </button>
-        )}
-      </div>
+        </div>
+      )}
+      
+      <CartModal 
+        products={cartProducts}
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)}
+      />
     </section>
   );
 };

@@ -1,39 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit'
 import Swal from 'sweetalert2'
 
-const initialState ={
+const initialState = {
     products: [],
     selectedItems: 0,
     totalPrice: 0
 }
-//calculate cart total
+
+// Calculate cart totals
 const calculateCartTotals = (products) => {
     const selectedItems = products.reduce((total, product) => total + product.quantity, 0);
-    const totalPrice = products.reduce((total, product) => total + product.quantity * product.price , 0)
+    const totalPrice = products.reduce((total, product) => total + product.quantity * product.price, 0)
 
-    return {selectedItems, totalPrice};
+    return { selectedItems, totalPrice };
 }
 
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
-    reducers:{
+    reducers: {
         addToCart: (state, action) => {
             const isExist = state.products.find(product => product._id === action.payload._id);
-            //console.log(isExist)
-            if(!isExist){
-                state.products.push({...action.payload, quantity: 1})
+            
+            if (!isExist) {
+                state.products.push({ ...action.payload, quantity: 1 })
                 Swal.fire({
-                    text:"Product added successfully!",
+                    text: "Product added successfully!",
                     confirmButtonText: "It's Ok"
                 })
-            } else{
-              Swal.fire({
+            } else {
+                Swal.fire({
                     title: 'Error!',
                     text: 'Product already Added to Cart',
                     icon: 'error',
                     confirmButtonText: "It's Ok"
-                  })
+                })
             }
             const totals = calculateCartTotals(state.products);
             state.selectedItems = totals.selectedItems;
@@ -41,11 +42,11 @@ export const cartSlice = createSlice({
         },
         updateQuantity: (state, action) => {
             const product = state.products.find((item) => item._id === action.payload.id);
-        
-            if(product) {
-                if(action.payload.type === "increament") {
+
+            if (product) {
+                if (action.payload.type === "increment") { // Fixed typo: "increament" -> "increment"
                     product.quantity += 1;
-                } else if(action.payload.type === "decrement" && product.quantity > 1) {
+                } else if (action.payload.type === "decrement" && product.quantity > 1) {
                     product.quantity -= 1;
                 }
             }
@@ -59,12 +60,12 @@ export const cartSlice = createSlice({
             state.selectedItems = totals.selectedItems;
             state.totalPrice = totals.totalPrice;
         },
+        
         clearCart: (state) => {
             Object.assign(state, initialState)
-
         }
     }
 })
 
-export const {addToCart,updateQuantity,removeFromCart,clearCart} = cartSlice.actions;
+export const { addToCart, updateQuantity, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer
