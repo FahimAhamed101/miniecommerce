@@ -9,13 +9,13 @@ dotenv.config();
 
 const app = express();
 
-// Enhanced CORS configuration
+
 app.use(cors({
   origin: ['http://localhost:5173'],
   credentials: true
 }));
 
-// Improved body parser with better error handling
+
 app.use(express.json({ 
   limit: "25mb",
   verify: (req, res, buf) => {
@@ -27,33 +27,33 @@ app.use(express.json({
   }
 }));
 
-// Database connection with robust configuration
+
 async function connectDB() {
   try {
     await mongoose.connect(process.env.DB_URL, {
-      serverSelectionTimeoutMS: 30000, // 30 seconds timeout for initial connection
-      socketTimeoutMS: 45000, // 45 seconds timeout for queries
-      maxPoolSize: 10, // Maximum number of connections in pool
+      serverSelectionTimeoutMS: 30000, 
+      socketTimeoutMS: 45000, 
+      maxPoolSize: 10, 
       retryWrites: true,
       w: 'majority'
     });
     console.log("Successfully connected to MongoDB.");
     
-    // Set global query timeout
+  
     mongoose.set('bufferTimeoutMS', 30000);
   } catch (err) {
     console.error("MongoDB connection error:", err);
-    process.exit(1); // Exit if DB connection fails
+    process.exit(1);
   }
 }
 
-// Connect to database before starting server
+
 connectDB();
 
-// Routes
+
 app.use("/api/products", productRoutes);
 
-// Enhanced image upload with error handling
+
 app.post("/uploadImage", async (req, res) => {
   try {
     if (!req.body.image) {
@@ -69,7 +69,7 @@ app.post("/uploadImage", async (req, res) => {
 app.get("/", (req, res) => {
   res.send("Mini E-commerce Server is running....");
 });
-// Health check endpoint
+
 app.get("/health", (req, res) => {
   res.status(200).json({ 
     status: "healthy",
@@ -78,7 +78,7 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Error handling middleware
+
 app.use((err, req, res, next) => {
   console.error("Server error:", err);
   res.status(500).json({ 
@@ -88,13 +88,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Server configuration
+
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
-// Handle shutdown gracefully
+
 process.on('SIGTERM', () => {
   server.close(() => {
     mongoose.connection.close(false, () => {
