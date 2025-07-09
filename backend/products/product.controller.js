@@ -67,7 +67,7 @@ export const getSingleProduct=async(req,res)=>{
     }
 
 
-    return successResponse(res, 200, "Single Product and reviews ",{product, reviews})
+    return successResponse(res, 200, "Single Product ",{product})
 
    } catch (error) {
     return errorResponse(res, 500, "Failed to get single product", error)
