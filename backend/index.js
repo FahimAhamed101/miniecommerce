@@ -66,7 +66,9 @@ app.post("/uploadImage", async (req, res) => {
     res.status(500).json({ error: "Failed to upload image" });
   }
 });
-
+app.get("/", (req, res) => {
+  res.send("Mini E-commerce Server is running....");
+});
 // Health check endpoint
 app.get("/health", (req, res) => {
   res.status(200).json({ 
