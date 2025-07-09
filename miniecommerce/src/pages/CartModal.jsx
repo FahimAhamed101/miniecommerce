@@ -37,7 +37,7 @@ const CartModal = ({ products, isOpen, onClose }) => {
     <div className="fixed inset-0 z-[1000] overflow-hidden">
       {/* Backdrop with fade animation */}
       <div 
-        className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300"
+        className="absolute inset-0  transition-opacity duration-300"
         onClick={onClose}
       />
       
