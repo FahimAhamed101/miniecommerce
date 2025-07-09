@@ -1,9 +1,10 @@
 MERN E-Commerce with RTK Query
 📝 Description
-A modern e-commerce application built with the MERN stack (MongoDB, Express, React, Node.js) featuring Redux Toolkit (RTK) Query for efficient data fetching and state management. The application includes product listings, a shopping cart, checkout functionality, and responsive design.
+A modern mini e-commerce application built with the MERN stack (MongoDB, Express, React, Node.js) featuring Redux Toolkit (RTK) Query for efficient data fetching and state management. The application includes product listings, a shopping cart, checkout functionality, and responsive design.
 
 🚀 Live Demo
-View Live Demo on Vercel
+View Live Demo on Vercel :- 
+https://miniecommercefrontend.vercel.app/
 
 🛠️ Tech Stack
 Frontend:
@@ -25,8 +26,6 @@ Node.js
 Express.js
 
 MongoDB (with Mongoose)
-
-JWT Authentication
 
 Dev Tools:
 
@@ -58,7 +57,9 @@ Example .env for server:
 
 text
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/ecommerce
+DB_URL=mongodb://localhost:27017/ecommerce
+
+miniecommerce/utils/getbaseurl path must be changed
 
 Install dependencies:
 
@@ -91,28 +92,7 @@ Frontend: http://localhost:5173
 
 Backend API: http://localhost:5000/
 
-📂 Project Structure
-text
-mern-ecommerce-rtk/
-├── client/                  # Frontend React application
-│   ├── public/
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── features/        # RTK slices and API services
-│   │   ├── pages/           # Page components
-│   │   ├── App.jsx          # Main App component
-│   │   └── main.jsx         # Entry point
-│   └── vite.config.js       # Vite configuration
-│
-├── server/                  # Backend Express application
-│   ├── controllers/         # Route controllers
-│   ├── models/              # MongoDB models
-│   ├── routes/              # API routes
-│   ├── utils/               # Utility functions
-│   └── server.js            # Express server entry
-│
-├── .gitignore
-└── README.md
+
 🔥 Features
 Product Catalog:
 
